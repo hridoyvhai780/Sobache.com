@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sobache.com | আপনার প্রয়োজন, এখন এক ক্লিকে!</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,"Noto Sans Bengali",sans-serif;background:#f5f7fb;color:#17243b}
+header{background:#fff;padding:13px 5%;display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:10;box-shadow:0 2px 12px #00000010}
+.logo{font-size:23px;font-weight:900;color:#102b54}
+.logo span{color:#f47721}
+.tag{font-size:11px;color:#68758a;margin-top:3px}
+.cart{background:#102b54;color:white;border:0;padding:11px 15px;border-radius:9px;font-weight:bold}
+.hero{margin:18px auto;background:linear-gradient(120deg,#102b54,#175a9b);color:white;border-radius:18px;padding:30px 22px;max-width:1100px;width:92%;position:relative;overflow:hidden}
+.hero h1{font-size:29px;line-height:1.5;margin-bottom:9px}
+.hero p{font-size:14px;line-height:1.8;color:#e2eafa}
+.hero button{background:#ff861f;color:white;border:0;padding:12px 20px;border-radius:8px;margin-top:17px;font-weight:bold}
+section{max-width:1100px;width:92%;margin:25px auto}
+.heading{font-size:20px;font-weight:800;margin-bottom:15px}
+.search{display:flex;background:white;border:1px solid #e1e6ee;border-radius:10px;overflow:hidden;margin-bottom:20px}
+.search input{flex:1;min-width:0;padding:14px;border:0;outline:0;font-size:15px}
+.search button{background:#f47721;color:white;border:0;padding:0 18px}
+.categories{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.cat{background:white;padding:16px 5px;border-radius:12px;text-align:center;border:1px solid #e9edf4;cursor:pointer;font-size:13px;font-weight:bold}
+.cat .emoji{font-size:27px;display:block;margin-bottom:8px}
+.cat.active{border:2px solid #f47721;color:#e66d13;background:#fff9f3}
+.products{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.product{background:white;border-radius:13px;overflow:hidden;border:1px solid #e9edf4}
+.product img{width:100%;height:145px;object-fit:cover;background:#eee}
+.info{padding:11px}
+.info h3{font-size:14px;min-height:37px;line-height:1.5}
+.price{font-size:17px;color:#e86f18;font-weight:900;margin:8px 0}
+.old{font-size:11px;color:#9299a5;text-decoration:line-through;margin-left:5px}
+.add{width:100%;background:#102b54;color:white;border:0;padding:10px;border-radius:7px;font-weight:bold}
+.add:active{background:#f47721}
+.empty{grid-column:1/-1;text-align:center;padding:30px;background:white;border-radius:12px}
+.benefits{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.benefit{background:white;border-radius:12px;padding:16px 7px;text-align:center;font-size:12px;font-weight:bold}
+.benefit b{display:block;font-size:24px;margin-bottom:7px}
+footer{background:#10213e;color:white;text-align:center;padding:27px 15px;line-height:2;font-size:13px}
+footer strong{font-size:19px;color:#ff922f}
+.cartbox{position:fixed;inset:0;background:#0008;z-index:30;display:none;justify-content:flex-end}
+.panel{background:white;width:min(400px,92%);height:100%;padding:20px;overflow:auto}
+.panelhead{display:flex;justify-content:space-between;margin-bottom:20px;font-size:19px;font-weight:bold}
+.close{border:0;background:#eee;border-radius:7px;padding:7px 12px}
+.cartitem{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid #eee;padding:12px 0;font-size:14px}
+.qty button{padding:4px 9px;border:0;background:#eaf0f8;border-radius:5px}
+.total{font-size:20px;font-weight:bold;margin:20px 0}
+.checkout{width:100%;background:#16834b;color:white;border:0;padding:14px;border-radius:9px;font-size:16px;font-weight:bold}
+.whatsapp{position:fixed;right:17px;bottom:18px;background:#20b95a;color:white;text-decoration:none;border-radius:30px;padding:13px 17px;font-weight:bold;z-index:20;box-shadow:0 4px 12px #0003}
+@media(max-width:650px){
+ .products{grid-template-columns:repeat(2,1fr);gap:10px}
+ .categories{grid-template-columns:repeat(3,1fr)}
+ .hero h1{font-size:24px}
+ .product img{height:125px}
+ .benefits{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<header>
+ <div>
+  <div class="logo">🛍️ সব আছে<span> ডট কম</span></div>
+  <div class="tag">আপনার প্রয়োজন, এখন এক ক্লিকে!</div>
+ </div>
+ <button class="cart" onclick="openCart()">🛒 কার্ট (<span id="count">0</span>)</button>
+</header>
+
+<div class="hero">
+ <h1>বাংলাদেশের অনলাইন শপিং,<br>এখন আরও সহজ!</h1>
+ <p>আপনার দৈনন্দিন প্রয়োজনীয় পণ্য কিনুন ঘরে বসেই। সারা বাংলাদেশে অর্ডারের সুবিধা।</p>
+ <button onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">এখনই কেনাকাটা করুন →</button>
+</div>
+
+<section>
+ <div class="search">
+  <input id="search" placeholder="আপনার প্রয়োজনীয় পণ্য খুঁজুন..." oninput="render()">
+  <button onclick="render()">🔍 খুঁজুন</button>
+ </div>
+ <div class="heading">🛍️ পণ্যের বিভাগ</div>
+ <div class="categories" id="categories">
+  <div class="cat active" onclick="filterCat('সব',this)"><span class="emoji">🛒</span>সব পণ্য</div>
+  <div class="cat" onclick="filterCat('ফ্যাশন',this)"><span class="emoji">👕</span>ফ্যাশন</div>
+  <div class="cat" onclick="filterCat('ইলেকট্রনিক্স',this)"><span class="emoji">📱</span>ইলেকট্রনিক্স</div>
+  <div class="cat" onclick="filterCat('হোম',this)"><span class="emoji">🏠</span>ঘর ও জীবন</div>
+  <div class="cat" onclick="filterCat('বিউটি',this)"><span class="emoji">🧴</span>বিউটি ও কেয়ার</div>
+ </div>
+</section>
+
+<section id="products">
+ <div class="heading">🔥 জনপ্রিয় পণ্য</div>
+ <div class="products" id="productList"></div>
+</section>
+
+<section>
+ <div class="heading">কেনাকাটা করুন নিশ্চিন্তে</div>
+ <div class="benefits">
+  <div class="benefit"><b>🚚</b>সারা দেশে ডেলিভারি</div>
+  <div class="benefit"><b>🛡️</b>নিরাপদ অর্ডার</div>
+  <div class="benefit"><b>💵</b>ক্যাশ অন ডেলিভারি</div>
+  <div class="benefit"><b>🎧</b>কাস্টমার সাপোর্ট</div>
+ </div>
+</section>
+
+<footer>
+ <strong>Sobache.com</strong>
+ <p>আপনার প্রয়োজন, এখন এক ক্লিকে!</p>
+ <p>সারা বাংলাদেশে সহজ ও নির্ভরযোগ্য অনলাইন শপিং</p>
+ <p>যোগাযোগ: 01903412852 | 01964119083</p>
+ <p>© 2026 Sobache.com. All rights reserved.</p>
+</footer>
+
+<a class="whatsapp" href="https://wa.me/8801903412852" target="_blank">WhatsApp যোগাযোগ</a>
+
+<div class="cartbox" id="cartbox" onclick="if(event.target===this)closeCart()">
+ <div class="panel">
+  <div class="panelhead">🛒 আপনার কার্ট <button class="close" onclick="closeCart()">✕</button></div>
+  <div id="cartItems"></div>
+  <div class="total" id="total">মোট: ৳০</div>
+  <button class="checkout" onclick="orderNow()">WhatsApp-এ অর্ডার করুন</button>
+ </div>
+</div>
+
+<script>
+const products=[
+ {id:1,name:"স্টাইলিশ টি-শার্ট",cat:"ফ্যাশন",price:350,img:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500"},
+ {id:2,name:"স্মার্ট ওয়াচ",cat:"ইলেকট্রনিক্স",price:850,img:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500"},
+ {id:3,name:"হোম ডেকোর ল্যাম্প",cat:"হোম",price:650,img:"https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=500"},
+ {id:4,name:"স্কিন কেয়ার সেট",cat:"বিউটি",price:550,img:"https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=500"},
+ {id:5,name:"সানগ্লাস",cat:"ফ্যাশন",price:250,img:"https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=500"},
+ {id:6,name:"হেডফোন",cat:"ইলেকট্রনিক্স",price:750,img:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500"},
+ {id:7,name:"কফি মগ",cat:"হোম",price:180,img:"https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=500"},
+ {id:8,name:"পারফিউম",cat:"বিউটি",price:490,img:"https://images.unsplash.com/photo-1541643600914-78b084683601?w=500"}
+];
+let category="সব",cart={};
+function filterCat(c,el){
+ category=c;
+ document.querySelectorAll(".cat").forEach(x=>x.classList.remove("active"));
+ el.classList.add("active");render();
+}
+function render(){
+ let q=document.getElementById("search").value.toLowerCase();
+ let list=products.filter(p=>(category==="সব"||p.cat===category)&&(p.name.toLowerCase().includes(q)||p.cat.toLowerCase().includes(q)));
+ document.getElementById("productList").innerHTML=list.length?list.map(p=>`
+ <div class="product">
+ <img src="${p.img}" alt="${p.name}" loading="lazy">
+ <div class="info"><h3>${p.name}</h3>
+ <div class="price">৳${p.price}</div>
+ <button class="add" onclick="addCart(${p.id})">কার্টে যোগ করুন +</button></div></div>`).join(""):'<div class="empty">কোনো পণ্য পাওয়া যায়নি।</div>';
+}
+function addCart(id){cart[id]=(cart[id]||0)+1;updateCart();}
+function updateCart(){
+ let count=Object.values(cart).reduce((a,b)=>a+b,0);
+ document.getElementById("count").textContent=count;
+ let total=0;
+ let html=Object.keys(cart).filter(id=>cart[id]>0).map(id=>{
+ let p=products.find(x=>x.id==id),sub=p.price*cart[id];total+=sub;
+ return `<div class="cartitem"><div>${p.name}<br>৳${p.price} × ${cart[id]}</div>
+ <div class="qty"><button onclick="changeQty(${id},-1)">−</button> ${cart[id]} <button onclick="changeQty(${id},1)">+</button></div></div>`;
+ }).join("");
+ document.getElementById("cartItems").innerHTML=html||"আপনার কার্ট এখন খালি।";
+ document.getElementById("total").textContent="মোট: ৳"+total;
+}
+function changeQty(id,n){cart[id]=Math.max(0,(cart[id]||0)+n);updateCart();}
+function openCart(){updateCart();document.getElementById("cartbox").style.display="flex";}
+function closeCart(){document.getElementById("cartbox").style.display="none";}
+function orderNow(){
+ let ids=Object.keys(cart).filter(id=>cart[id]>0);
+ if(!ids.length){alert("আগে কার্টে পণ্য যোগ করুন।");return;}
+ let total=0;
+ let msg="আসসালামু আলাইকুম, Sobache.com থেকে অর্ডার করতে চাই:\n";
+ ids.forEach(id=>{let p=products.find(x=>x.id==id);total+=p.price*cart[id];msg+=`\n${p.name} × ${cart[id]} = ৳${p.price*cart[id]}`;});
+ msg+=`\n\nসর্বমোট: ৳${total}\n\nআমার নাম:\nমোবাইল:\nসম্পূর্ণ ঠিকানা:`;
+ window.open("https://wa.me/8801903412852?text="+encodeURIComponent(msg),"_blank");
+}
+render();updateCart();
+</script>
+</body>
+</html>
